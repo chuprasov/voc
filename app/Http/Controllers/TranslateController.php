@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
 use Illuminate\Http\Request;
 use App\Services\TranslatorContract;
 
@@ -19,7 +18,7 @@ class TranslateController extends Controller
 
     public function translateWord(Request $request)
     {
-        $translations = app(TranslatorContract::class)::translate('en', 'ru', $request->word);
+        $translations = app(TranslatorContract::class)::translate('ru', 'de', $request->word);
         $sourceWord = $request->word;
 
         return redirect()->route('translator.index', compact('translations', 'sourceWord'));

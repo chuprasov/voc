@@ -16,7 +16,9 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/index', [TranslateController::class, 'index'])->name('translator.index');
-    Route::get('/translate', [TranslateController::class, 'translateWord'])->name('translate');
-    Route::get('/tostr', [TranslateController::class, 'transToStr'])->name('tostr');
+    Route::controller(TranslateController::class)->group(function () {
+        Route::get('/index', 'index')->name('translator.index');
+        Route::get('/translate', 'translateWord')->name('translate');
+        Route::get('/tostr', 'transToStr')->name('tostr');
+    });
 });
