@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TranslateController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('translator.index'));
 });
 
 Route::middleware([
@@ -12,10 +12,6 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-
     Route::controller(TranslateController::class)->group(function () {
         Route::get('/index', 'index')->name('translator.index');
         Route::get('/translate', 'translateWord')->name('translate');

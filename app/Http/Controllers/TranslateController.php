@@ -11,28 +11,32 @@ class TranslateController extends Controller
     {
         $translations = $request->translations ?? [];
         $transString = $request->transString ?? '';
-        $sourceWord = $request->sourceWord ?? '';
+        $sourceText = $request->sourceText ?? '';
 
-        return view('translator.index', compact('translations', 'transString', 'sourceWord'));
+        return view('translator.index', compact('translations', 'transString', 'sourceText'));
     }
 
     public function translateWord(Request $request)
     {
-        $translations = app(TranslatorContract::class)::translate('ru', 'de', $request->word);
-        $sourceWord = $request->word;
+        $translationData = app(TranslatorContract::class)::translate('ru', 'de', $request->word);
 
-        return redirect()->route('translator.index', compact('translations', 'sourceWord'));
+        // $sourceText = $request->word;
+        $sourceText = isset($translationData['text']) ? $translationData['text'] : $request->word;
+
+        $translations = isset($translationData['translations']) ? $translationData['translations'] : [];
+
+        return redirect()->route('translator.index', compact('translations', 'sourceText'));
     }
 
     public function transToStr(Request $request)
     {
-        $sourceWord = $request->word ?? '';
+        $sourceText = $request->word ?? '';
 
         $translations = array_slice($request->query(), 1);
 
-        $transString = implode(', ', $translations);
+        $transString = implode('; ', $translations);
 
-        return redirect()->route('translator.index', compact('transString', 'sourceWord'));
+        return redirect()->route('translator.index', compact('transString', 'sourceText'));
     }
 
 }
