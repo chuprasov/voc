@@ -8,8 +8,8 @@ use App\Services\TranslatorContract;
 
 class TranslateControllerApi extends Controller
 {
-    public function translateWord(Request $request)
+    public function translateText(Request $request)
     {
-        return app(TranslatorContract::class)::translate('en','ru',$request->word);
+        return app(TranslatorContract::class)::translate('en','ru',$request->text);
     }
 }

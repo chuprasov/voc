@@ -16,7 +16,7 @@ class TranslateController extends Controller
         return view('translator.index', compact('translations', 'transString', 'sourceText'));
     }
 
-    public function translateWord(Request $request)
+    public function translateText(Request $request)
     {
         $translationData = app(TranslatorContract::class)::translate('ru', 'de', $request->word);
 

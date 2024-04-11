@@ -14,7 +14,7 @@ Route::middleware([
 ])->group(function () {
     Route::controller(TranslateController::class)->group(function () {
         Route::get('/index', 'index')->name('translator.index');
-        Route::get('/translate', 'translateWord')->name('translate');
+        Route::get('/translate', 'translateText')->name('translate');
         Route::get('/tostr', 'transToStr')->name('tostr');
     });
 });
