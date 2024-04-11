@@ -20,7 +20,6 @@ class TranslateController extends Controller
     {
         $translationData = app(TranslatorContract::class)::translate('ru', 'de', $request->word);
 
-        // $sourceText = $request->word;
         $sourceText = isset($translationData['text']) ? $translationData['text'] : $request->word;
 
         $translations = isset($translationData['translations']) ? $translationData['translations'] : [];

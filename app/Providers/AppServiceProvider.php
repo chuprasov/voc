@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\DeepLTranslator;
 use App\Services\YandexTranslator;
 use App\Services\TranslatorContract;
 use Illuminate\Support\ServiceProvider;
@@ -9,7 +10,8 @@ use Illuminate\Support\ServiceProvider;
 class AppServiceProvider extends ServiceProvider
 {
     public array $bindings = [
-        TranslatorContract::class  => YandexTranslator::class,
+        // TranslatorContract::class  => YandexTranslator::class,
+        TranslatorContract::class  => DeepLTranslator::class,
     ];
 
     /**
