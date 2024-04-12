@@ -9,22 +9,39 @@ class TranslateController extends Controller
 {
     public function index(Request $request)
     {
+        $sourceLang = 'ru';
+        $targetLang = 'de';
         $translations = $request->translations ?? [];
         $transString = $request->transString ?? '';
         $sourceText = $request->sourceText ?? '';
+        $languages = config('voc.languages');
 
-        return view('translator.index', compact('translations', 'transString', 'sourceText'));
+        return view('translator.index', compact(
+            'sourceLang',
+            'targetLang',
+            'translations',
+            'transString',
+            'sourceText',
+            'languages'
+        ));
     }
 
     public function translateText(Request $request)
     {
-        $translationData = app(TranslatorContract::class)::translate('ru', 'de', $request->word);
+        $sourceLang = $request->source_lang;
+        $targetLang = $request->target_lang;
 
-        $sourceText = isset($translationData['text']) ? $translationData['text'] : $request->word;
+        $translationData = app(TranslatorContract::class)::translate($sourceLang, $targetLang, $request->text);
 
+        $sourceText = isset($translationData['text']) ? $translationData['text'] : $request->text;
         $translations = isset($translationData['translations']) ? $translationData['translations'] : [];
 
-        return redirect()->route('translator.index', compact('translations', 'sourceText'));
+        return redirect()->route('translator.index', compact(
+            'sourceLang',
+            'targetLang',
+            'translations',
+            'sourceText'
+        ));
     }
 
     public function transToStr(Request $request)
