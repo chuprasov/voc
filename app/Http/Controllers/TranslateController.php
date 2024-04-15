@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DictionaryEntry;
 use Illuminate\Http\Request;
 use App\Services\TranslatorContract;
 use GuzzleHttp\Cookie\SetCookie;
@@ -62,4 +63,33 @@ class TranslateController extends Controller
 
         return redirect()->route('translate', compact('transString', 'text', 'remarks'));
     }
+
+    public function save(Request $request)
+    {
+        $user = $request->user();
+        $sourceLang = $request->source_lang ?? '';
+        $targetLang = $request->target_lang ?? '';
+        $text = $request->source_text ?? '';
+        $remarks = $request->remarks ?? '';
+        $translations = $request->translations ?? '';
+        $sentence = $request->sentence ?? '';
+
+        $entry = DictionaryEntry::updateOrCreate(
+            ['lang' => $sourceLang, 'text' => $text, 'user_id' => $user->id],
+            ['remarks' => $remarks]
+        );
+
+        $entry->translations()->updateOrCreate(
+            ['lang' => $targetLang],
+            ['text' => $translations]
+        );
+
+        $entry->sentence()->updateOrCreate(
+            [],
+            ['text' => $sentence]
+        );
+
+        return redirect()->route('translate');
+    }
+
 }

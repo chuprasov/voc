@@ -15,5 +15,6 @@ Route::middleware([
     Route::controller(TranslateController::class)->group(function () {
         Route::get('/translate', 'translate')->name('translate');
         Route::post('/tostr', 'transToStr')->name('tostr');
+        Route::post('/save', 'save')->name('save');
     });
 });

@@ -85,38 +85,45 @@
                             </div>
                         </aside>
 
-                        <div
+                        <form action="{{ route('save') }}" method="POST"
                             class="basis-auto xl:basis-3/4 w-full space-y-4 p-4 rounded-lg border border-solid border-black bg-gray/5 text-dark">
+                                @csrf
+                                <input type="hidden" name="source_lang" value="{{ $sourceLang }}">
+                                <input type="hidden" name="target_lang" value="{{ $targetLang }}">
+                                <div class="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
+                                    <div class="flex flex-col space-y-4 basis-1/2">
+                                        <x-label for="source_text" class="text-lg"
+                                            value="Source text [{{ $sourceLang }}]" />
+                                        <x-input type="text" name="source_text"
+                                            class="block p-2.5 w-full text-lg text-black bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            placeholder="Source text..." value="{{ $sourceText }}" required
+                                            :isError="$errors->has('word')" />
+                                    </div>
+                                    <div class="flex flex-col space-y-4 basis-1/2">
+                                        <x-label for="remarks" class="text-lg" value="Remarks" />
+                                        <x-input type="text" name="remarks"
+                                            class="block p-2.5 w-full text-lg text-black bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            placeholder="Remarks..." value="{{ $remarks }}" required
+                                            :isError="$errors->has('word')" />
 
-                            <div class="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
-                                <div class="flex flex-col space-y-4 basis-1/3">
-                                    <x-label for="source_text" class="text-lg"
-                                        value="Source text [{{ $sourceLang }}]" />
-                                    <x-input type="text" name="source_text"
-                                        class="block p-2.5 w-full text-lg text-black bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="Source text..." value="{{ $sourceText }}" required
-                                        :isError="$errors->has('word')" />
+                                    </div>
                                 </div>
-                                <div class="flex flex-col space-y-4 basis-2/3">
-                                    <x-label for="source_text" class="text-lg" value="Remarks" />
-                                    <x-input type="text" name="remarks"
-                                        class="block p-2.5 w-full text-lg text-black bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="Remarks..." value="{{ $remarks }}" required
-                                        :isError="$errors->has('word')" />
 
-                                </div>
-                            </div>
+                                <x-label for="translations" class="text-lg"
+                                    value="Translation(s) [{{ $targetLang }}]" />
+                                <x-input type="text" name="translations"
+                                    class="block p-2.5 w-full text-lg text-black bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Translated text..." value="{{ $transString }}" required
+                                    :isError="$errors->has('word')" />
 
-                            <x-label for="translations" class="text-lg" value="Translation(s) [{{ $targetLang }}]" />
-                            <x-input type="text" name="translations"
-                                class="block p-2.5 w-full text-lg text-black bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Translated text..." value="{{ $transString }}" required :isError="$errors->has('word')" />
-
-                            <x-label for="sentence" class="text-lg" value="Example sentence" />
-                            <textarea id="sentence" name="sentence" rows="2"
-                                class="block p-2.5 w-full text-lg text-black bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Example sentence..."></textarea>
-                        </div>
+                                <x-label for="sentence" class="text-lg" value="Example sentence" />
+                                <textarea id="sentence" name="sentence" rows="2"
+                                    class="block p-2.5 w-full text-lg text-black bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Example sentence..."></textarea>
+                                <x-button type="submit" class="mt-4 w-full md:w-1/3 !h-16 justify-center">
+                                    Save
+                                </x-button>
+                        </form>
                     </div>
                 </section>
             </div>
