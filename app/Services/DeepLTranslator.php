@@ -22,7 +22,12 @@ class DeepLTranslator implements TranslatorContract
                 'text' => $text,
             ])->throw()->json();
 
-            $sourceData = [];
+            $sourceData = [
+                'text' => $text,
+                'pos' => '',
+                'gen' => '',
+            ];
+
             $translations = [];
 
             if (isset($response['translations']) && isset($response['translations'][0])) {

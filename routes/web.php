@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TranslateController;
 
 Route::get('/', function () {
-    return redirect(route('translator.index'));
+    return redirect(route('translate'));
 });
 
 Route::middleware([
@@ -13,8 +13,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::controller(TranslateController::class)->group(function () {
-        Route::get('/index', 'index')->name('translator.index');
-        Route::get('/translate', 'translateText')->name('translate');
-        Route::get('/tostr', 'transToStr')->name('tostr');
+        Route::get('/translate', 'translate')->name('translate');
+        Route::post('/tostr', 'transToStr')->name('tostr');
     });
 });

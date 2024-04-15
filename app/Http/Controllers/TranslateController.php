@@ -4,55 +4,62 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\TranslatorContract;
+use GuzzleHttp\Cookie\SetCookie;
+use Illuminate\Support\Facades\Cookie;
 
 class TranslateController extends Controller
 {
-    public function index(Request $request)
+    public function translate(Request $request)
     {
-        $sourceLang = 'ru';
-        $targetLang = 'de';
-        $translations = $request->translations ?? [];
-        $transString = $request->transString ?? '';
-        $sourceText = $request->sourceText ?? '';
-        $languages = config('voc.languages');
+        $languages = config('voc.languages', []);
 
-        return view('translator.index', compact(
-            'sourceLang',
-            'targetLang',
-            'translations',
-            'transString',
-            'sourceText',
-            'languages'
-        ));
-    }
+        $sourceLang = $request->source_lang ?? Cookie::get('source_lang', 'en');
+        $targetLang = $request->target_lang ?? Cookie::get('target_lang', 'ru');
 
-    public function translateText(Request $request)
-    {
-        $sourceLang = $request->source_lang;
-        $targetLang = $request->target_lang;
+        Cookie::queue(Cookie::make('source_lang', $sourceLang, 60 * 24 * 7));
+        Cookie::queue(Cookie::make('target_lang', $targetLang, 60 * 24 * 7));
 
-        $translationData = app(TranslatorContract::class)::translate($sourceLang, $targetLang, $request->text);
+        $sourceText = $request->text ?? '';
 
-        $sourceText = isset($translationData['text']) ? $translationData['text'] : $request->text;
-        $translations = isset($translationData['translations']) ? $translationData['translations'] : [];
+        $remarks = $request->remarks ?? '';
 
-        return redirect()->route('translator.index', compact(
-            'sourceLang',
-            'targetLang',
-            'translations',
-            'sourceText'
-        ));
+        $translations = [];
+
+        if ($sourceText !== '') {
+            $translationData = app(TranslatorContract::class)::translate($sourceLang, $targetLang, $sourceText);
+
+            if (isset($translationData['remarks'])) {
+                $remarks = $translationData['remarks'];
+            }
+
+            if (isset($translationData['translations'])) {
+                $translations = $translationData['translations'];
+            }
+        }
+
+        $transString =  $request->transString ?? '';
+
+        return view('translator.translate', [
+            'languages' => $languages,
+            'sourceLang' => $sourceLang,
+            'targetLang' => $targetLang,
+            'sourceText' => $sourceText,
+            'remarks' => $remarks,
+            'translations' => $translations,
+            'transString' => $transString,
+        ]);
     }
 
     public function transToStr(Request $request)
     {
-        $sourceText = $request->word ?? '';
+        $text = $request->text ?? '';
 
-        $translations = array_slice($request->query(), 1);
+        $remarks = $request->remarks ?? '';
+
+        $translations = array_slice($request->post(), 3);
 
         $transString = implode('; ', $translations);
 
-        return redirect()->route('translator.index', compact('transString', 'sourceText'));
+        return redirect()->route('translate', compact('transString', 'text', 'remarks'));
     }
-
 }

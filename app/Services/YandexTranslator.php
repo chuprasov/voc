@@ -21,6 +21,9 @@ class YandexTranslator implements TranslatorContract
             ])->throw()->json();
 
             $sourceData = [];
+
+            $remarks = [];
+
             $translations = [];
 
             if (isset($response['def']) && isset($response['def'][0])) {
@@ -30,28 +33,13 @@ class YandexTranslator implements TranslatorContract
                     'gen' => ''
                 ]);
 
+                $remarks = [
+                    'remarks' => self::processTranslation($sourceData, $sourceLang)
+                ];
+
                 $translations = array_map(
                     function ($tr) use ($targetLang) {
-                        $artD = [
-                            'm' => 'der ',
-                            'f' => 'die ',
-                            'n' => 'das ',
-                        ];
-
-                        $prefix = '';
-                        $postfix = '';
-
-                        if (isset($tr['gen'])) {
-                            if ($targetLang === 'de') {
-                                $prefix = $artD[$tr['gen']];
-                            };
-
-                            $postfix = ' (' . $tr['gen'] . ')';
-                        }
-
-                        $textExt = $prefix . $tr['text'] . $postfix;
-
-                        return  $textExt;
+                        return self::processTranslation($tr, $targetLang);
                     },
                     $response['def'][0]['tr']
                 );
@@ -61,12 +49,36 @@ class YandexTranslator implements TranslatorContract
 
             $translationResult = array_merge(
                 $sourceData,
+                $remarks,
                 ['translations' => $translations]
             );
 
             return $translationResult;
+
         } catch (Exception $e) {
             return 'Error !!!';
         }
+    }
+
+    protected static function processTranslation(array $translation, string $lang)
+    {
+        $artD = [
+            'm' => 'der ',
+            'f' => 'die ',
+            'n' => 'das ',
+        ];
+
+        $prefix = '';
+        $postfix = '';
+
+        if (isset($translation['gen'])) {
+            if ($lang === 'de' && array_key_exists($translation['gen'], $artD)) {
+                $prefix = $artD[$translation['gen']];
+            };
+
+            $postfix = ' (' . $translation['gen'] . ')';
+        }
+
+        return $prefix . $translation['text'] . $postfix;
     }
 }

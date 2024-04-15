@@ -13,12 +13,14 @@
                         <aside class="basis-2/5 xl:basis-1/4">
                             <div class="space-y-1 p-4 rounded-lg border border-solid border-black bg-gray/5 text-dark">
                                 <form action="{{ route('translate') }}" method="GET">
-                                    @csrf
                                     <div class="space-y-4">
                                         <div class="flex flex-row space-x-4">
-                                            <select name="source_lang" id="source-lang" class="block rounded-lg" wire:model="gender">
+                                            <select name="source_lang" id="source-lang" class="block rounded-lg"
+                                                wire:model="lang">
                                                 @foreach ($languages as $lang)
-                                                    <option value="{{ $lang }}" {{ $lang === $sourceLang ? "selected" : "" }}>{{ $lang }}</option>
+                                                    <option value="{{ $lang }}"
+                                                        {{ $lang === $sourceLang ? 'selected' : '' }}>
+                                                        {{ $lang }}</option>
                                                 @endforeach
                                             </select>
 
@@ -29,9 +31,11 @@
                                             </svg>
 
 
-                                            <select name="target_lang" id="target-lang"  class="block rounded-lg" wire:model="gender">
+                                            <select name="target_lang" id="target-lang" class="block rounded-lg"
+                                                wire:model="lang">
                                                 @foreach ($languages as $lang)
-                                                    <option value="{{ $lang }}" {{ $lang === $targetLang ? "selected" : "" }} >
+                                                    <option value="{{ $lang }}"
+                                                        {{ $lang === $targetLang ? 'selected' : '' }}>
                                                         {{ $lang }}
                                                     </option>
                                                 @endforeach
@@ -49,9 +53,11 @@
                                         </div>
                                     </div>
                                 </form>
-                                <form action="{{ route('tostr') }}" method="GET">
+                                <form action="{{ route('tostr') }}" method="POST">
+                                    @csrf
                                     @isset($translations)
-                                        <input type="hidden" name="word" id="word" value="{{ $sourceText }}">
+                                        <input type="hidden" name="text" value="{{ $sourceText }}">
+                                        <input type="hidden" name="remarks" value="{{ $remarks }}">
                                         <div class = "overflow-auto max-h-[150px] lg:max-h-[100%]">
                                             @foreach ($translations as $translation)
                                                 <div>
@@ -82,17 +88,34 @@
                         <div
                             class="basis-auto xl:basis-3/4 w-full space-y-4 p-4 rounded-lg border border-solid border-black bg-gray/5 text-dark">
 
-                            <label for="translations" class="text-lg">
-                                {{ $sourceText }}
-                            </label>
+                            <div class="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
+                                <div class="flex flex-col space-y-4 basis-1/3">
+                                    <x-label for="source_text" class="text-lg"
+                                        value="Source text [{{ $sourceLang }}]" />
+                                    <x-input type="text" name="source_text"
+                                        class="block p-2.5 w-full text-lg text-black bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        placeholder="Source text..." value="{{ $sourceText }}" required
+                                        :isError="$errors->has('word')" />
+                                </div>
+                                <div class="flex flex-col space-y-4 basis-2/3">
+                                    <x-label for="source_text" class="text-lg" value="Remarks" />
+                                    <x-input type="text" name="remarks"
+                                        class="block p-2.5 w-full text-lg text-black bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        placeholder="Remarks..." value="{{ $remarks }}" required
+                                        :isError="$errors->has('word')" />
 
+                                </div>
+                            </div>
+
+                            <x-label for="translations" class="text-lg" value="Translation(s) [{{ $targetLang }}]" />
                             <x-input type="text" name="translations"
                                 class="block p-2.5 w-full text-lg text-black bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Translated text" value="{{ $transString }}" required :isError="$errors->has('word')" />
+                                placeholder="Translated text..." value="{{ $transString }}" required :isError="$errors->has('word')" />
 
+                            <x-label for="sentence" class="text-lg" value="Example sentence" />
                             <textarea id="sentence" name="sentence" rows="2"
                                 class="block p-2.5 w-full text-lg text-black bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Example sentence"></textarea>
+                                placeholder="Example sentence..."></textarea>
                         </div>
                     </div>
                 </section>
