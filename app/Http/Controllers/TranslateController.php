@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\DictionaryEntry;
 use App\Services\TranslatorContract;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 
 class TranslateController extends Controller
@@ -18,7 +18,7 @@ class TranslateController extends Controller
         $remarks = $request->remarks;
         $importance = $request->importance ?? 100;
         $translations = $request->translations ?? [];
-        $transString =  $request->transString;
+        $transString = $request->transString;
         $sentence = $request->sentence;
 
         return view('translator.translate', compact(
@@ -64,7 +64,7 @@ class TranslateController extends Controller
             ->where('lang', $sourceLang)
             ->first();
 
-        if (!is_null($dictionaryEntry)) {
+        if (! is_null($dictionaryEntry)) {
             $sourceText = $dictionaryEntry->text;
 
             $remarks = $dictionaryEntry->remarks;
@@ -73,14 +73,14 @@ class TranslateController extends Controller
                 ->where('lang', $targetLang)
                 ->first();
 
-            if (!is_null($translationRecord)) {
+            if (! is_null($translationRecord)) {
                 $transString = $translationRecord->text;
             }
 
             $sentenceRecord = $dictionaryEntry->sentence()
                 ->first();
 
-            if (!is_null($sentenceRecord)) {
+            if (! is_null($sentenceRecord)) {
                 $sentence = $sentenceRecord->text;
             }
         }
@@ -125,11 +125,11 @@ class TranslateController extends Controller
             [
                 'lang' => $sourceLang,
                 'text' => $sourceText,
-                'user_id' => $user->id
+                'user_id' => $user->id,
             ],
             [
                 'remarks' => $remarks,
-                'importance' => $importance
+                'importance' => $importance,
             ]
         );
 

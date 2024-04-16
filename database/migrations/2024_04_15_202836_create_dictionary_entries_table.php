@@ -15,7 +15,7 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->string('lang',2);
+            $table->string('lang', 2);
             $table->string('text');
             $table->string('remarks');
             $table->integer('importance');

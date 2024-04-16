@@ -4,7 +4,6 @@ namespace App\Services;
 
 use Exception;
 use Illuminate\Support\Facades\Http;
-use App\Services\TranslatorContract;
 
 class YandexTranslator implements TranslatorContract
 {
@@ -13,9 +12,9 @@ class YandexTranslator implements TranslatorContract
     public static function translate(string $sourceLang, string $targetLang, string $text)
     {
         try {
-            $response = Http::get(self::HOST . '/lookup', [
+            $response = Http::get(self::HOST.'/lookup', [
                 'key' => env('YANDEX_API_KEY', ''),
-                'lang' => $sourceLang . '-' . $targetLang,
+                'lang' => $sourceLang.'-'.$targetLang,
                 'text' => $text,
                 'ui' => 'en',
             ])->throw()->json();
@@ -30,11 +29,11 @@ class YandexTranslator implements TranslatorContract
                 $sourceData = array_intersect_key($response['def'][0], [
                     'text' => '',
                     'pos' => '',
-                    'gen' => ''
+                    'gen' => '',
                 ]);
 
                 $remarks = [
-                    'remarks' => self::processTranslation($sourceData, $sourceLang)
+                    'remarks' => self::processTranslation($sourceData, $sourceLang),
                 ];
 
                 $translations = array_map(
@@ -74,11 +73,11 @@ class YandexTranslator implements TranslatorContract
         if (isset($translation['gen'])) {
             if ($lang === 'de' && array_key_exists($translation['gen'], $artD)) {
                 $prefix = $artD[$translation['gen']];
-            };
+            }
 
-            $postfix = ' (' . $translation['gen'] . ')';
+            $postfix = ' ('.$translation['gen'].')';
         }
 
-        return $prefix . $translation['text'] . $postfix;
+        return $prefix.$translation['text'].$postfix;
     }
 }

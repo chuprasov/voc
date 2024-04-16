@@ -100,7 +100,7 @@
                                 <div class="flex flex-col space-y-4 basis-2/5">
                                     <div class="flex flex-row space-x-3">
                                         <x-label for="source_text" class="text-lg"
-                                            value="Source text   ({{ strtoupper($sourceLang) }})" />
+                                            value="Source text ({{ strtoupper($sourceLang) }})" />
 
                                         <img src="{{ asset('images/' . $sourceLang . '.png') }}" alt=""
                                             height="10" width="20">

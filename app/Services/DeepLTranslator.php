@@ -4,7 +4,6 @@ namespace App\Services;
 
 use Exception;
 use Illuminate\Support\Facades\Http;
-use App\Services\TranslatorContract;
 
 class DeepLTranslator implements TranslatorContract
 {
@@ -14,9 +13,9 @@ class DeepLTranslator implements TranslatorContract
     {
         try {
             $response = Http::asForm()->withHeaders([
-                'Authorization' => 'DeepL-Auth-Key ' . env('DEEPL_API_KEY'),
-                'Content-Type' => 'application/json'
-            ])->post(self::HOST . '/translate', [
+                'Authorization' => 'DeepL-Auth-Key '.env('DEEPL_API_KEY'),
+                'Content-Type' => 'application/json',
+            ])->post(self::HOST.'/translate', [
                 'source_lang' => $sourceLang,
                 'target_lang' => $targetLang,
                 'text' => $text,
