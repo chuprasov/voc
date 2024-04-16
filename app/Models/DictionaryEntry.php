@@ -17,7 +17,8 @@ class DictionaryEntry extends Model
         'user_id',
         'lang',
         'text',
-        'remarks'
+        'remarks',
+        'importance',
     ];
 
     public function translations(): HasMany

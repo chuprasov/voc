@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('lang',2);
             $table->string('text');
             $table->string('remarks');
+            $table->integer('importance');
             $table->timestamps();
         });
     }
