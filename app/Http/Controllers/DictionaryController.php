@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Support\Translator;
-use Illuminate\Http\Request;
+use App\Models\Translation;
 
 class DictionaryController extends Controller
 {
     public function index()
     {
-        
+        $translations = Translation::query()->get();
 
-        return view('dictionary');
+        return view('dictionary', compact('translations'));
     }
 }
