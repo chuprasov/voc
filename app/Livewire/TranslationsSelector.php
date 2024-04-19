@@ -36,4 +36,10 @@ class TranslationsSelector extends Component
     {
         return view('livewire.translations-selector');
     }
+
+    public function rendered($view, $html)
+    {
+        $this->dispatch('translations-rendered');
+    }
+
 }

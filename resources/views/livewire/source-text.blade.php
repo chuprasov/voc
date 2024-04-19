@@ -55,25 +55,3 @@
         </div>
     </div>
 </div>
-
-@script
-    <script>
-        function setCookie(cname, cvalue, exdays) {
-            alert(cname);
-            const d = new Date();
-            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-            let expires = "expires=" + d.toUTCString();
-            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-        }
-
-        $wire.on('translated', (event) => {
-            // alert('translated');
-        })
-
-        $wire.on('searched', (event) => {
-            // alert($wire.targetLang);
-            /* setCookie('source_lang', $wire.sourceLang, 30);
-            setCookie('target_lang', $wire.targetLang, 30); */
-        })
-    </script>
-@endscript

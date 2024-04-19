@@ -3,7 +3,7 @@
         <div class = "overflow-auto max-h-[150px] lg:max-h-[100%]">
             @foreach ($translations as $translation)
                 <div>
-                    <x-checkbox class="ml-2" name="t-{{ $loop->index }}" type="checkbox" value="{{ $translation }}"
+                    <x-checkbox class="checkbox ml-2" name="t-{{ $loop->index }}" type="checkbox" value="{{ $translation }}"
                         id="t-{{ $loop->index }}"></x-checkbox>
                     <label for="t-{{ $loop->index }}" class="ml-2 text-lg">
                         {{ $translation }}
@@ -19,11 +19,3 @@
         </x-button>
     </div>
 </div>
-
-@script
-    <script>
-        /* $wire.on('to-str-converted', (event) => {
-            alert('to-str-converted');
-        }) */
-    </script>
-@endscript

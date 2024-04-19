@@ -56,14 +56,3 @@
     </x-button>
 </div>
 
-@script
-    <script>
-        /* $wire.on('saved', (event) => {
-                alert('saved');
-            })
-
-            $wire.on('searched', (event) => {
-                alert('searched');
-            }) */
-    </script>
-@endscript

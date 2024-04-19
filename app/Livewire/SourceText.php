@@ -52,4 +52,5 @@ class SourceText extends Component
     {
         return view('livewire.source-text');
     }
+
 }

@@ -10,7 +10,7 @@
 
                                 @livewire('translations-selector', compact('translations'))
 
-                                <x-button type="button" name="get-sel" id="get-sel"
+                                <x-button class="checkbox" type="button" name="get-sel" id="get-sel"
                                     class="mt-4 w-full !h-16 justify-center">
                                     Get selected JS
                                 </x-button>
