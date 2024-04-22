@@ -5,15 +5,10 @@
                 <section>
                     <div class="flex flex-col lg:flex-row gap-12 lg:gap-6 2xl:gap-8">
                         <aside class="basis-2/5 xl:basis-1/4">
-                            <div class="space-y-1 p-4 rounded-lg border border-solid border-black bg-gray/5 text-dark">
+                            <div class="p-4 rounded-lg border border-solid border-black bg-gray/5 text-dark">
                                 @livewire('source-text', compact('sourceLang', 'targetLang', 'sourceText'))
 
                                 @livewire('translations-selector', compact('translations'))
-
-                                <x-button class="checkbox" type="button" name="get-sel" id="get-sel"
-                                    class="mt-4 w-full !h-16 justify-center">
-                                    Get selected JS
-                                </x-button>
                             </div>
                         </aside>
 
