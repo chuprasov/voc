@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", (event) => {
 
     document.addEventListener("click", function (e) {
+
         if (e.target.classList.contains("checkbox")) {
-            let getsel = document.querySelector("#get-sel");
+
             let checkbox = document.querySelectorAll(".checkbox");
             let output = document.querySelector("#trans-string");
             let arr = [];
