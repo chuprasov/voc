@@ -33,7 +33,7 @@
         <img src="{{ asset('images/' . $targetLang . '.png') }}" alt="" height="10" width="20">
     </div>
 
-    <x-input wire:model="transString" type="text" name="transString"
+    <x-input wire:model="transString" type="text" name="transString" id="trans-string"
         class="block p-2.5 w-full text-lg text-black bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder="Translated text..." value="{{ $transString ?? '' }}" required :isError="$errors->has('transString')" />
 
