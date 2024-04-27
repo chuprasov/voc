@@ -24,4 +24,51 @@ document.addEventListener("DOMContentLoaded", (event) => {
         }
     });
 
+    const apiUrl = 'https://lara2.fcqdaqp.online/api/products/all';
+
+    fetch(apiUrl)
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
+
+
+    let search = document.querySelector('#search');
+    let searcharr = ['table', 'apple', 'chair', 'computer', 'cup', 'short', 'hand', 'head', 'bubble', 'ball'];
+
+    const searchResults = document.querySelector('#searchResults');
+
+
+    function updateSearchResults(query) {
+        searchResults.innerHTML = '';
+
+        const filteredWords = searcharr.filter(word => {
+            return word.toLowerCase().includes(query.toLowerCase());
+        });
+
+        filteredWords.forEach(word => {
+            const li = document.createElement('li');
+            li.textContent = word;
+            searchResults.appendChild(li);
+            li.addEventListener('click', function() {
+                search.value = word;
+            });
+        });
+    }
+
+    search.addEventListener('input', () => {
+        const query = search.value.trim();
+
+        if (query) {
+            updateSearchResults(query);
+        } else {
+            searchResults.innerHTML = '';
+        }
+    });
+
 });
