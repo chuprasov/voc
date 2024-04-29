@@ -18,22 +18,25 @@ class TranslatorWeb extends Translator
         ]);
     }
 
-    public function saveAttributesToSession(): void
+    public function saveAttributesToSession()
     {
         $vars = get_object_vars($this);
 
         foreach ($vars as $key => $var) {
             session()->put($key, $var);
         }
+
+        return $this;
     }
 
-    public function restoreAttributesFromSession(): void
+    public function restoreAttributesFromSession()
     {
         $vars = get_object_vars($this);
 
         foreach ($vars as $key => $value) {
             $this->$value = session()->get($key);
         }
-    }
 
+        return $this;
+    }
 }

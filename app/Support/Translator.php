@@ -49,6 +49,8 @@ class Translator
                 $this->sentence = $sentenceRecord->text;
             }
         }
+
+        return $this;
     }
 
     public function translate()
@@ -76,11 +78,15 @@ class Translator
                 $this->translations = $translationData['translations'];
             }
         }
+
+        return $this;
     }
 
     public function transToStr(array $selectedTranslations)
     {
         $this->transString = implode('; ', $selectedTranslations);
+
+        return $this;
     }
 
     public function saveEntry()
@@ -112,6 +118,8 @@ class Translator
                 ['text' => $this->sentence]
             );
         }
+
+        return $this;
     }
 
 }

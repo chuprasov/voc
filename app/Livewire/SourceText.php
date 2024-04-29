@@ -16,8 +16,8 @@ class SourceText extends Component
 
     protected function newTranslator(): TranslatorWeb
     {
-        Cookie::queue('source_lang', $this->sourceLang, 30*24*60);
-        Cookie::queue('target_lang', $this->targetLang, 30*24*60);
+        Cookie::queue('source_lang', $this->sourceLang, 30 * 24 * 60);
+        Cookie::queue('target_lang', $this->targetLang, 30 * 24 * 60);
 
         return new TranslatorWeb(
             sourceLang: $this->sourceLang,
@@ -28,26 +28,19 @@ class SourceText extends Component
 
     public function search(): void
     {
-        $translator = $this->newTranslator();
-
-        $translator->searchExistingEntry();
-
-        $translator->saveAttributesToSession();
+        $translator = $this->newTranslator()
+            ->searchExistingEntry()
+            ->saveAttributesToSession();
 
         $this->dispatch('searched');
     }
 
     public function translate()
     {
-        dump(ctype_alpha($this->sourceText));
-
-        $translator = $this->newTranslator();
-
-        $translator->translate();
-
-        $translator->searchExistingEntry();
-
-        $translator->saveAttributesToSession();
+        $translator = $this->newTranslator()
+            ->translate()
+            ->searchExistingEntry()
+            ->saveAttributesToSession();
 
         $this->dispatch('translated');
     }
@@ -56,5 +49,4 @@ class SourceText extends Component
     {
         return view('livewire.source-text');
     }
-
 }
