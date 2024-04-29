@@ -53,7 +53,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 
                 let searchResults = document.querySelector('#searchResults');
                 let dataArr = result.results;
-                console.log(dataArr)
                 
                     searchResults.innerHTML = '';
 
