@@ -24,7 +24,7 @@
         </div>
 
         <div class="flex flex-row">
-            <x-input wire:model="sourceText" class="basis-4/5" name="sourceText" placeholder="Text..." id="search"
+            <x-input wire:model="sourceText" class="basis-4/5" name="sourceText" placeholder="Text..." id="sourceText"
                 value="{{ $sourceText }}" class="w-full !h-16 text-lg" required :isError="$errors->has('sourceText')" maxlength="30" />
 
             <x-button wire:click="search" type="button" name="search" class="basis-1/5 !h-16">
@@ -41,10 +41,10 @@
                 </div>
             </x-button>
         </div>
-        <ul id="searchResults" class="hover:cursor-pointer"></ul>
+        <select id="searchResults" class="w-full !h-10 text-lg hidden border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"></select>
 
         <div>
-            <x-button wire:click="translate" type="button" class="w-full !h-16 justify-center">
+            <x-button wire:click="translate" id="translate-button" type="button" class="w-full !h-16 justify-center">
                 <div wire:loading wire:target="translate"
                     class="mr-5 inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                     role="status">

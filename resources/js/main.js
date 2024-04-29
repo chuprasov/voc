@@ -4,6 +4,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
         if (e.target.classList.contains("checkbox")) {
 
+            let transBtn = document.querySelector('#translate-button');
+
+            transBtn.addEventListener('click', function() {
+                for (let i = 0; i < checkbox.length; i++) {
+                    if (checkbox[i].checked) {
+                        checkbox[i].checked = false;
+                        output.value = '';
+                    }
+                }
+            });
+
             let checkbox = document.querySelectorAll(".checkbox");
             let output = document.querySelector("#trans-string");
             let arr = [];
@@ -24,51 +35,64 @@ document.addEventListener("DOMContentLoaded", (event) => {
         }
     });
 
-    const apiUrl = 'https://lara2.fcqdaqp.online/api/products/all';
 
+    /* Live search with API */
+    const apiUrl = 'https://lara2.fcqdaqp.online/api/products/all';
+    
     fetch(apiUrl)
         .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
             return response.json();
         })
-        .then(data => {
-            console.log(data);
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-        });
+        .then(result => {
+            let search = document.querySelector('#sourceText');
+            let searchResults = document.querySelector('#searchResults');
+            let dataArr = result.data;
+            let titleArr = [];
+            for (let i = 0; i < dataArr.length; i++) {
+                titleArr[i] = dataArr[i].title;
+            }
 
+            function updateSearchResults(query) {
+                searchResults.innerHTML = '';
 
-    let search = document.querySelector('#search');
-    let searcharr = ['table', 'apple', 'chair', 'computer', 'cup', 'short', 'hand', 'head', 'bubble', 'ball'];
+                let filteredWords = titleArr.filter(word => {
+                    return word.toLowerCase().includes(query.toLowerCase());
+                });
+            
+                filteredWords.forEach(word => {
+                    let option = document.createElement('option');
+                    option.classList.add('bg-gray-800', 'text-white')
+                    option.textContent = word;
+                    searchResults.appendChild(option);
+                });
+            }
 
-    const searchResults = document.querySelector('#searchResults');
+            search.addEventListener('input', () => {
+                let query = search.value.trim();
 
-
-    function updateSearchResults(query) {
-        searchResults.innerHTML = '';
-
-        const filteredWords = searcharr.filter(word => {
-            return word.toLowerCase().includes(query.toLowerCase());
-        });
-
-        filteredWords.forEach(word => {
-            const li = document.createElement('li');
-            li.textContent = word;
-            searchResults.appendChild(li);
-            li.addEventListener('click', function() {
-                search.value = word;
+                if (search.timer) {
+                    clearTimeout(search.timer);
+                }
+                
+                search.timer = setTimeout(() => {
+                    if(search.value !='') {
+                        searchResults.classList.remove('hidden')
+                    }
+                    else {
+                        searchResults.classList.add('hidden')
+                    }
+                    if (query) {
+                        updateSearchResults(query);
+                    } else {
+                        searchResults.innerHTML = '';
+                    }
+                }, 500);
             });
         });
-    }
-
-    search.addEventListener('input', () => {
-        const query = search.value.trim();
-
-        if (query) {
-            updateSearchResults(query);
-        } else {
-            searchResults.innerHTML = '';
-        }
-    });
+    
+    
 
 });
