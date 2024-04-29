@@ -12,7 +12,7 @@ class Translator
         protected $targetLang = '',
         protected $sourceText = '',
         protected $remarks = '',
-        protected $importance = 100,
+        protected $importance = 50,
         protected $translations = [],
         protected $transString = '',
         protected $sentence = ''
@@ -72,6 +72,10 @@ class Translator
                 $this->targetLang,
                 $this->sourceText
             );
+
+            if (isset($translationData['text'])) {
+                $this->sourceText = $translationData['text'];
+            }
 
             if (isset($translationData['remarks'])) {
                 $this->remarks = $translationData['remarks'];

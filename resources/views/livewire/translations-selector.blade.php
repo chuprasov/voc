@@ -12,10 +12,4 @@
             @endforeach
         </div>
     @endif
-
-    {{-- <div>
-        <x-button wire:click="toStr" type="button" class="mt-4 w-full !h-16 justify-center">
-            Get selected
-        </x-button>
-    </div> --}}
 </div>

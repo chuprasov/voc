@@ -14,6 +14,7 @@ class TranslationsSelector extends Component
     #[On('translated')]
     public function refreshTranslations(): void
     {
+        $this->reset();
         $this->translations = session()->get('translations');
     }
 
