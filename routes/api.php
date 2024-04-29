@@ -9,3 +9,5 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/translate', [TranslateControllerApi::class, 'translateText']);
+
+Route::get('/search', [TranslateControllerApi::class, 'search']);

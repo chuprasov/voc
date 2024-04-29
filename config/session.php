@@ -32,7 +32,8 @@ return [
     |
     */
 
-    'lifetime' => env('SESSION_LIFETIME', 120),
+    // 'lifetime' => env('SESSION_LIFETIME', 120),
+    'lifetime' => 1 * (60 * 24 * 365), // 1 year
 
     'expire_on_close' => env('SESSION_EXPIRE_ON_CLOSE', false),
 
