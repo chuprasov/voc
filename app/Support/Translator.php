@@ -8,6 +8,7 @@ use App\Services\TranslatorContract;
 class Translator
 {
     public function __construct(
+        protected $service = 'auto',
         protected $sourceLang = '',
         protected $targetLang = '',
         protected $sourceText = '',
@@ -17,20 +18,6 @@ class Translator
         protected $transString = '',
         protected $sentence = ''
     ) {
-    }
-
-    public function index()
-    {
-        return view('translate', [
-            'sourceLang' => $this->sourceLang,
-            'targetLang' => $this->targetLang,
-            'sourceText' => $this->sourceText,
-            'remarks' => $this->remarks,
-            'importance' => $this->importance,
-            'translations' => $this->translations,
-            'transString' => $this->transString,
-            'sentence' => $this->sentence
-        ]);
     }
 
     public function searchExistingEntry()
@@ -72,6 +59,10 @@ class Translator
                 $this->targetLang,
                 $this->sourceText
             );
+
+            if (isset($translationData['service'])) {
+                $this->service = $translationData['service'];
+            }
 
             if (isset($translationData['text'])) {
                 $this->sourceText = $translationData['text'];
@@ -120,24 +111,6 @@ class Translator
                 [],
                 ['text' => $this->sentence]
             );
-        }
-    }
-
-    public function saveAttributesToSession(): void
-    {
-        $vars = get_object_vars($this);
-
-        foreach ($vars as $key => $var) {
-            session()->put($key, $var);
-        }
-    }
-
-    public function restoreAttributesFromSession(): void
-    {
-        $vars = get_object_vars($this);
-
-        foreach ($vars as $key => $value) {
-            $this->$value = session()->get($key);
         }
     }
 

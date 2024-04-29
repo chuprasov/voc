@@ -6,22 +6,36 @@ use Illuminate\Http\Request;
 use App\Models\DictionaryEntry;
 use App\Http\Controllers\Controller;
 use App\Services\TranslatorContract;
-use Illuminate\Database\Eloquent\Collection;
+use App\Support\TranslatorApi;
 
 class TranslateControllerApi extends Controller
 {
     /**
      * Translate text
      *
-     * @response array{text: string, pos: string, remarks: string, translations: array<string>}
+     * @response array{
+     * service: string,
+     * sourceLang: string,
+     * targetLang: string,
+     * sourceText: string,
+     * remarks: string,
+     * translations: array<string>}
      */
     public function translateText(Request $request)
     {
         $request->validate([
-            'text' => 'string',
+            'sourceLang' => 'required|max:2',
+            'targetLang' => 'required|max:2',
+            'text' => 'required|max:255',
         ]);
-        
-        return app(TranslatorContract::class)::translate('en', 'ru', $request->text);
+
+        $translator = new TranslatorApi(
+            sourceLang: $request->sourceLang,
+            targetLang: $request->targetLang,
+            sourceText: $request->text,
+        );
+
+        return $translator->translateApi();
     }
 
     /**
