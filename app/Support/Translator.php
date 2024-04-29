@@ -3,7 +3,9 @@
 namespace App\Support;
 
 use App\Models\DictionaryEntry;
+use App\Services\DeepLTranslator;
 use App\Services\TranslatorContract;
+use App\Services\YandexTranslator;
 
 class Translator
 {
@@ -18,6 +20,7 @@ class Translator
         protected $transString = '',
         protected $sentence = ''
     ) {
+        $this->sourceText = strtolower(trim($sourceText));
     }
 
     public function searchExistingEntry()
@@ -53,8 +56,32 @@ class Translator
         return $this;
     }
 
-    public function translate()
+    public function translate(string $service)
     {
+        switch ($service) {
+            case 'auto':
+                if (strpos($this->sourceText, ' ') > 0) {
+                    $serviceClass = DeepLTranslator::class;
+                } else {
+                    $serviceClass = YandexTranslator::class;
+                }
+                break;
+
+            case 'yandex':
+                $serviceClass = YandexTranslator::class;
+                break;
+
+            case 'deepl':
+                $serviceClass = DeepLTranslator::class;
+                break;
+
+            default:
+                $serviceClass = YandexTranslator::class;
+                break;
+        }
+
+        app()->bind(TranslatorContract::class, $serviceClass);
+
         if ($this->sourceText !== '') {
             $translationData = app(TranslatorContract::class)::translate(
                 $this->sourceLang,
@@ -121,5 +148,4 @@ class Translator
 
         return $this;
     }
-
 }

@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Support\Translator;
+use App\Support\TranslatorWeb;
 use Livewire\Attributes\On;
 
 class DictionaryEntry extends Component
@@ -49,7 +49,7 @@ class DictionaryEntry extends Component
 
     public function saveEntry(): void
     {
-        $translator = new Translator(
+        $translator = new TranslatorWeb(
             sourceLang: $this->sourceLang,
             targetLang: $this->targetLang,
             sourceText: $this->sourceText,

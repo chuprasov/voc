@@ -6,7 +6,7 @@ class TranslatorApi extends Translator
 {
     public function translateApi()
     {
-        $this->translate();
+        $this->translate('auto');
 
         return array_merge(
             [

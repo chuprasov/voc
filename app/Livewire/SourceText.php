@@ -28,7 +28,7 @@ class SourceText extends Component
 
     public function search(): void
     {
-        $translator = $this->newTranslator()
+        $this->newTranslator()
             ->searchExistingEntry()
             ->saveAttributesToSession();
 
@@ -37,8 +37,8 @@ class SourceText extends Component
 
     public function translate()
     {
-        $translator = $this->newTranslator()
-            ->translate()
+        $this->newTranslator()
+            ->translate('auto')
             ->searchExistingEntry()
             ->saveAttributesToSession();
 
