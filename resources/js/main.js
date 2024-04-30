@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                     console.error('Fetch error:', error);
             });
     }
-    let search = document.querySelector('#sourceText');
+    /* let search = document.querySelector('#sourceText');
     search.addEventListener('input', () => {
         let query = search.value.trim();
 
@@ -88,5 +88,5 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 searchResults.innerHTML = '';
             }
         }, 500);
-    });
+    }); */
 });
