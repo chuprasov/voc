@@ -25,7 +25,7 @@ class Translator
 
     public function searchExistingEntry()
     {
-        $dictionaryEntry = DictionaryEntry::where('text', $this->sourceText)
+        $dictionaryEntry = DictionaryEntry::search($this->sourceText)
             ->where('user_id', auth()->user()->id)
             ->where('lang', $this->sourceLang)
             ->first();
@@ -121,7 +121,7 @@ class Translator
         $entry = DictionaryEntry::updateOrCreate(
             [
                 'lang' => $this->sourceLang,
-                'text' => $this->sourceText,
+                'text' => strtolower($this->sourceText),
                 'user_id' => auth()->user()->id,
             ],
             [

@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 });
 
                 output.value = filteredArr.join("; ");
+
+                output.dispatchEvent(new Event('input'));
             }
         }
     });
@@ -41,7 +43,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     function searchApiByText(query) {
         const url = `${apiUrl}?text=${encodeURIComponent(query)}`;
-    
+
         fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -50,16 +52,16 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 return response.json();
             })
             .then(result => {
-                
+
                 let searchResults = document.querySelector('#searchResults');
                 let dataArr = result.results;
-                
+
                     searchResults.innerHTML = '';
 
                     let filteredWords = dataArr.filter(word => {
                         return word.toLowerCase().includes(query.toLowerCase());
                     });
-                
+
                     filteredWords.forEach(word => {
                         let option = document.createElement('option');
                         option.classList.add('bg-gray-800', 'text-white')
@@ -78,7 +80,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         if (search.timer) {
             clearTimeout(search.timer);
         }
-        
+
         search.timer = setTimeout(() => {
             if (query) {
                 searchApiByText(query);
