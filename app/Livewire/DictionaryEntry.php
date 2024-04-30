@@ -20,10 +20,6 @@ class DictionaryEntry extends ModalComponent
     public string $sentence;
     public string $message = '';
 
-    /* public $listeners = [
-        'searched' => 'refreshAll',
-    ]; */
-
     #[On('translated'), On('searched')]
     public function refreshAll(): void
     {
