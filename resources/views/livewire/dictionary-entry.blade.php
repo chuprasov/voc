@@ -18,7 +18,7 @@
                 placeholder="Remarks..." value="{{ $remarks ?? '' }}" required :isError="$errors->has('remarks')" />
         </div>
         <div class="flex flex-col space-y-4 basis-1/5">
-            <x-label for="importance" class="text-lg" value="Importance, %" />
+            <x-label for="importance" class="text-lg" value="Imp., %" />
             <x-input wire:model="importance" type="text" name="importance"
                 class="block p-2.5 w-full text-lg text-black bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="100" value="{{ $importance ?? 100 }}" required :isError="$errors->has('importance')" />

@@ -6,8 +6,9 @@ use Laravel\Jetstream\InteractsWithBanner;
 use Livewire\Component;
 use App\Support\TranslatorWeb;
 use Livewire\Attributes\On;
+use LivewireUI\Modal\ModalComponent;
 
-class DictionaryEntry extends Component
+class DictionaryEntry extends ModalComponent
 {
     use InteractsWithBanner;
     public string $sourceLang;
