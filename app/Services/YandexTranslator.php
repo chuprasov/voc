@@ -47,6 +47,7 @@ class YandexTranslator implements TranslatorContract
             }
 
             $translationResult = array_merge(
+                ['service' => 'yandex'],
                 $sourceData,
                 $remarks,
                 ['translations' => $translations]

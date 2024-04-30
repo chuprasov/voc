@@ -2,12 +2,14 @@
 
 namespace App\Livewire;
 
+use Laravel\Jetstream\InteractsWithBanner;
 use Livewire\Component;
-use App\Support\Translator;
+use App\Support\TranslatorWeb;
 use Livewire\Attributes\On;
 
 class DictionaryEntry extends Component
 {
+    use InteractsWithBanner;
     public string $sourceLang;
     public string $targetLang;
     public string $sourceText;
@@ -49,7 +51,7 @@ class DictionaryEntry extends Component
 
     public function saveEntry(): void
     {
-        $translator = new Translator(
+        $translator = new TranslatorWeb(
             sourceLang: $this->sourceLang,
             targetLang: $this->targetLang,
             sourceText: $this->sourceText,
@@ -60,6 +62,8 @@ class DictionaryEntry extends Component
         );
 
         $translator->saveEntry();
+
+        // $this->banner('Entry saved!');
 
         $this->dispatch('saved');
     }

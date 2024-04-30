@@ -34,6 +34,7 @@ class DeepLTranslator implements TranslatorContract
             }
 
             $translationResult = array_merge(
+                ['service' => 'deepl'],
                 $sourceData,
                 ['translations' => $translations]
             );

@@ -3,39 +3,29 @@
 namespace App\Support;
 
 use App\Models\DictionaryEntry;
+use App\Services\DeepLTranslator;
 use App\Services\TranslatorContract;
+use App\Services\YandexTranslator;
 
 class Translator
 {
     public function __construct(
+        protected $service = 'auto',
         protected $sourceLang = '',
         protected $targetLang = '',
         protected $sourceText = '',
         protected $remarks = '',
-        protected $importance = 100,
+        protected $importance = 50,
         protected $translations = [],
         protected $transString = '',
         protected $sentence = ''
     ) {
-    }
-
-    public function index()
-    {
-        return view('translate', [
-            'sourceLang' => $this->sourceLang,
-            'targetLang' => $this->targetLang,
-            'sourceText' => $this->sourceText,
-            'remarks' => $this->remarks,
-            'importance' => $this->importance,
-            'translations' => $this->translations,
-            'transString' => $this->transString,
-            'sentence' => $this->sentence
-        ]);
+        $this->sourceText = strtolower(trim($sourceText));
     }
 
     public function searchExistingEntry()
     {
-        $dictionaryEntry = DictionaryEntry::where('text', $this->sourceText)
+        $dictionaryEntry = DictionaryEntry::search($this->sourceText)
             ->where('user_id', auth()->user()->id)
             ->where('lang', $this->sourceLang)
             ->first();
@@ -62,16 +52,50 @@ class Translator
                 $this->sentence = $sentenceRecord->text;
             }
         }
+
+        return $this;
     }
 
-    public function translate()
+    public function translate(string $service)
     {
+        switch ($service) {
+            case 'auto':
+                if (strpos($this->sourceText, ' ') > 0) {
+                    $serviceClass = DeepLTranslator::class;
+                } else {
+                    $serviceClass = YandexTranslator::class;
+                }
+                break;
+
+            case 'yandex':
+                $serviceClass = YandexTranslator::class;
+                break;
+
+            case 'deepl':
+                $serviceClass = DeepLTranslator::class;
+                break;
+
+            default:
+                $serviceClass = YandexTranslator::class;
+                break;
+        }
+
+        app()->bind(TranslatorContract::class, $serviceClass);
+
         if ($this->sourceText !== '') {
             $translationData = app(TranslatorContract::class)::translate(
                 $this->sourceLang,
                 $this->targetLang,
                 $this->sourceText
             );
+
+            if (isset($translationData['service'])) {
+                $this->service = $translationData['service'];
+            }
+
+            if (isset($translationData['text'])) {
+                $this->sourceText = $translationData['text'];
+            }
 
             if (isset($translationData['remarks'])) {
                 $this->remarks = $translationData['remarks'];
@@ -81,11 +105,15 @@ class Translator
                 $this->translations = $translationData['translations'];
             }
         }
+
+        return $this;
     }
 
     public function transToStr(array $selectedTranslations)
     {
         $this->transString = implode('; ', $selectedTranslations);
+
+        return $this;
     }
 
     public function saveEntry()
@@ -93,7 +121,7 @@ class Translator
         $entry = DictionaryEntry::updateOrCreate(
             [
                 'lang' => $this->sourceLang,
-                'text' => $this->sourceText,
+                'text' => strtolower($this->sourceText),
                 'user_id' => auth()->user()->id,
             ],
             [
@@ -117,24 +145,7 @@ class Translator
                 ['text' => $this->sentence]
             );
         }
+
+        return $this;
     }
-
-    public function saveAttributesToSession(): void
-    {
-        $vars = get_object_vars($this);
-
-        foreach ($vars as $key => $var) {
-            session()->put($key, $var);
-        }
-    }
-
-    public function restoreAttributesFromSession(): void
-    {
-        $vars = get_object_vars($this);
-
-        foreach ($vars as $key => $value) {
-            $this->$value = session()->get($key);
-        }
-    }
-
 }

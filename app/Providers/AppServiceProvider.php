@@ -9,10 +9,10 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    public array $bindings = [
+    /* public array $bindings = [
         TranslatorContract::class => YandexTranslator::class,
         // TranslatorContract::class  => DeepLTranslator::class,
-    ];
+    ]; */
 
     /**
      * Register any application services.
