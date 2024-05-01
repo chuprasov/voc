@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 
     /* Live search with API */
-    const apiUrl = 'http://localhost:8000/api/search';
+    const apiUrl = 'https://voc.fcqdaqp.online/api/search';
 
     function searchApiByText(query) {
         const url = `${apiUrl}?text=${encodeURIComponent(query)}`;
@@ -56,24 +56,28 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 let searchResults = document.querySelector('#searchResults');
                 let dataArr = result.results;
 
-                    searchResults.innerHTML = '';
+                searchResults.innerHTML = '';
 
-                    let filteredWords = dataArr.filter(word => {
-                        return word.toLowerCase().includes(query.toLowerCase());
-                    });
+                let filteredWords = dataArr.filter(word => {
+                    return word.toLowerCase().includes(query.toLowerCase());
+                });
 
-                    filteredWords.forEach(word => {
-                        let option = document.createElement('option');
-                        option.classList.add('bg-gray-800', 'text-white')
-                        option.textContent = word;
-                        searchResults.appendChild(option);
-                    });
+                filteredWords.forEach(word => {
+                    let option = document.createElement('option');
+                    option.classList.add('bg-gray-800', 'text-white')
+                    option.textContent = word;
+                    searchResults.appendChild(option);
+                });
             })
             .catch(error => {
-                    console.error('Fetch error:', error);
+                console.error('Fetch error:', error);
             });
     }
     let search = document.querySelector('#sourceText');
+    /* let searchBtn = document.querySelector('#searchBtn')
+    search.addEventListener('change', function() {
+        searchBtn.click();
+    }); */
     search.addEventListener('input', () => {
         let query = search.value.trim();
 
