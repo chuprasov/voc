@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
             });
     }
     let search = document.querySelector('#sourceText');
+    if (search) {
     search.addEventListener('input', () => {
         let query = search.value.trim();
 
@@ -89,4 +90,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
             }
         }, 500);
     });
+    }
 });
+
