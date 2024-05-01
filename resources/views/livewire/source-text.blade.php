@@ -21,11 +21,25 @@
                     </option>
                 @endforeach
             </select>
+
+            <x-button wire:click="swapLang" type="button" name="swap-lang" class="block rounded-lg">
+                <svg fill="#FFFFFF" height="20px" width="16px" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 477.426 477.426">
+                    <polygon
+                        points="101.82,187.52 57.673,143.372 476.213,143.372 476.213,113.372 57.181,113.372 101.82,68.733 80.607,47.519
+                                0,128.126 80.607,208.733 	" />
+                    <polygon
+                        points="396.82,268.694 375.607,289.907 420,334.301 1.213,334.301 1.213,364.301 420,364.301 375.607,408.694
+                                396.82,429.907 477.427,349.301 	" />
+                </svg>
+            </x-button>
+
         </div>
 
         <div class="flex flex-row">
-            <x-input wire:model="sourceText" list="searchResults" class="basis-4/5" name="sourceText" placeholder="Text..." id="sourceText"
-                value="{{ $sourceText }}" class="w-full !h-16 text-lg" required :isError="$errors->has('sourceText')" maxlength="30" />
+            <x-input wire:model="sourceText" list="searchResults" class="basis-4/5" name="sourceText"
+                placeholder="Text..." id="sourceText" value="{{ $sourceText }}" class="w-full !h-16 text-lg" required
+                :isError="$errors->has('sourceText')" maxlength="30" />
 
             <x-button wire:click="search" id="searchBtn" type="button" name="search" class="basis-1/5 !h-16">
                 <div wire:loading wire:target="search"
@@ -40,7 +54,8 @@
                     </svg>
                 </div>
             </x-button>
-            <datalist id="searchResults" class="w-full !h-10 text-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"></datalist>
+            <datalist id="searchResults"
+                class="w-full !h-10 text-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"></datalist>
         </div>
 
         <div>

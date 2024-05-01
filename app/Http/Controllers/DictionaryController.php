@@ -8,7 +8,12 @@ class DictionaryController extends Controller
 {
     public function index()
     {
-        $translations = Translation::query()->get();
+        $translations = Translation::query()
+            ->with(['dictionaryEntry', 'dictionaryEntry.sentence'])
+            ->get()
+            ->sortBy('lang')
+            ->sortBy('dictionaryEntry.text')
+            ->sortBy('dictionaryEntry.lang');
 
         return view('dictionary', compact('translations'));
     }

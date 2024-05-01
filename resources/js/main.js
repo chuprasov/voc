@@ -74,10 +74,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
             });
     }
     let search = document.querySelector('#sourceText');
-    /* let searchBtn = document.querySelector('#searchBtn')
-    search.addEventListener('change', function() {
-        searchBtn.click();
-    }); */
     search.addEventListener('input', () => {
         let query = search.value.trim();
 

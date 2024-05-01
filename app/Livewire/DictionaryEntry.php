@@ -6,8 +6,9 @@ use Laravel\Jetstream\InteractsWithBanner;
 use Livewire\Component;
 use App\Support\TranslatorWeb;
 use Livewire\Attributes\On;
+use LivewireUI\Modal\ModalComponent;
 
-class DictionaryEntry extends Component
+class DictionaryEntry extends ModalComponent
 {
     use InteractsWithBanner;
     public string $sourceLang;
@@ -18,10 +19,6 @@ class DictionaryEntry extends Component
     public string $transString;
     public string $sentence;
     public string $message = '';
-
-    /* public $listeners = [
-        'searched' => 'refreshAll',
-    ]; */
 
     #[On('translated'), On('searched')]
     public function refreshAll(): void
