@@ -36,10 +36,16 @@
 
         </div>
 
-        <div class="flex flex-row">
+        <div class="flex flex-row relative">
             <x-input wire:model="sourceText" list="searchResults" class="basis-4/5" name="sourceText"
-                placeholder="Text..." id="sourceText" value="{{ $sourceText }}" class="w-full !h-16 text-lg" required
+                placeholder="Text..." id="sourceText" value="{{ $sourceText }}" class="w-full !h-16 text-lg pr-6" required
                 :isError="$errors->has('sourceText')" maxlength="30" />
+                <button id="clearBtn" class="absolute right-14 top-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
 
             <x-button wire:click="search" id="searchBtn" type="button" name="search" class="basis-1/5 !h-16">
                 <div wire:loading wire:target="search"
