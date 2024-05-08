@@ -64,8 +64,16 @@
                 class="w-full !h-10 text-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"></datalist>
         </div>
 
-        <div>
-            <x-button wire:click="translate" id="translate-button" type="button" class="w-full !h-16 justify-center">
+        <div class="flex flex-row space-x-4">
+            <select name="service" id="service" class="block rounded-lg w-24" wire:model="service">
+                @foreach (config('voc.services', []) as $serv)
+                    <option value="{{ $serv }}" {{ $serv === $service ? 'selected' : '' }}>
+                        {{ $serv }}
+                    </option>
+                @endforeach
+            </select>
+
+            <x-button wire:click="translate" id="translate-button" type="button" class="w-full !h-10 justify-center">
                 <div wire:loading wire:target="translate"
                     class="mr-5 inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                     role="status">

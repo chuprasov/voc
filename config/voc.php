@@ -7,4 +7,10 @@ return [
         'de',
         'tr',
     ],
+    'services' => [
+        'auto',
+        'yandex',
+        'deepl',
+        'pons',
+    ],
 ];
