@@ -11,6 +11,7 @@ class SourceText extends Component
     public $sourceLang;
     public $targetLang;
     public $sourceText;
+    public $service = 'auto';
 
     public function setCookie(): void
     {
@@ -23,6 +24,7 @@ class SourceText extends Component
         $this->setCookie();
 
         return new TranslatorWeb(
+            service: $this->service,
             sourceLang: $this->sourceLang,
             targetLang: $this->targetLang,
             sourceText: $this->sourceText,
@@ -50,7 +52,7 @@ class SourceText extends Component
     public function translate()
     {
         $this->newTranslator()
-            ->translate('auto')
+            ->translate($this->service)
             ->searchExistingEntry()
             ->saveAttributesToSession();
 
