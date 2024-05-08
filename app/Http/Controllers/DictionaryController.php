@@ -13,7 +13,8 @@ class DictionaryController extends Controller
             ->get()
             ->sortBy('lang')
             ->sortBy('dictionaryEntry.text')
-            ->sortBy('dictionaryEntry.lang');
+            ->sortBy('dictionaryEntry.lang')
+            ->sortBy('dictionaryEntry.importance', descending:true);
 
         return view('dictionary', compact('translations'));
     }
