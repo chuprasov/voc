@@ -74,6 +74,25 @@ document.addEventListener("DOMContentLoaded", (event) => {
             });
     }
     let search = document.querySelector('#sourceText');
+    let clearBtn = document.querySelector('#clearBtn');
+
+    checkInputValue();
+
+    search.addEventListener('input', checkInputValue);
+
+    clearBtn.addEventListener('click', function() {
+        search.value = '';
+        checkInputValue();
+    });
+
+    function checkInputValue() {
+        if (search.value !== '') {
+            clearBtn.style.display = 'block';
+        } else {
+            clearBtn.style.display = 'none';
+        }
+    }
+
     if (search) {
     search.addEventListener('input', () => {
         let query = search.value.trim();
