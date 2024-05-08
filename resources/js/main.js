@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     /* Live search with API */
     // const apiUrl = 'https://voc.fcqdaqp.online/api/search';
-    const apiUrl = import.meta.env.VITE_APP_URL + '/api/search';
+    const apiUrl = import.meta.env.VITE_APP_URL + 'api/search';
     console.log(apiUrl);
 
     function searchApiByText(query) {
