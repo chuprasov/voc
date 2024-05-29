@@ -12,7 +12,7 @@
 
                 <!-- Navigation Links -->
                 {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"> --}}
-                <div class="space-x-8 -my-px ms-10 flex">
+                <div class="space-x-8 -my-px ms-10 hidden md:flex">
                     <x-nav-link href="{{ route('translate.index') }}" :active="request()->routeIs('translate.index')">
                         {{ __('Translate') }}
                     </x-nav-link>
@@ -156,6 +156,9 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('translate.index') }}" :active="request()->routeIs('translate.index')">
                 {{ __('Translate') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('dictionary.index') }}" :active="request()->routeIs('dictionary.index')">
+                {{ __('Dictionary') }}
             </x-responsive-nav-link>
         </div>
 

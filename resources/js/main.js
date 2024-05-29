@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", (event) => {
-
+    
     document.addEventListener("click", function (e) {
 
         if (e.target.classList.contains("checkbox")) {
@@ -80,18 +80,27 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     checkInputValue();
 
-    search.addEventListener('input', checkInputValue);
-
-    clearBtn.addEventListener('click', function() {
-        search.value = '';
-        checkInputValue();
-    });
+    if (search) {
+        search.addEventListener('input', checkInputValue);
+    }
+    if (clearBtn) {
+        clearBtn.addEventListener('click', function() {
+            let checkboxContainer = document.querySelector("#checkboxContainer");
+            if (checkboxContainer) {
+                checkboxContainer.classList.add('hidden');
+            }
+            search.value = '';
+            checkInputValue();
+        });
+    }
 
     function checkInputValue() {
-        if (search.value !== '') {
-            clearBtn.style.display = 'block';
-        } else {
-            clearBtn.style.display = 'none';
+        if(search) {
+            if (search.value !== '') {
+                clearBtn.style.display = 'block';
+            } else {
+                clearBtn.style.display = 'none';
+            }
         }
     }
 
