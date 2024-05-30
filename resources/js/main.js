@@ -1,22 +1,26 @@
 document.addEventListener("DOMContentLoaded", (event) => {
+    let search = document.querySelector('#sourceText');
+    let clearBtn = document.querySelector('#clearBtn');
+    let checkbox = document.querySelectorAll(".checkbox");
+    let output = document.querySelector("#trans-string");
     
+
+    let transBtn = document.querySelector('#translate-button');
+
+            transBtn.addEventListener('click', () => {
+                output.value = '';
+                for (let i = 0; i < checkbox.length; i++) {
+                    if (checkbox[i].checked) {
+                        checkbox[i].checked = false;
+                    }
+                }
+                console.log(search.value);
+            });
+
     document.addEventListener("click", function (e) {
 
         if (e.target.classList.contains("checkbox")) {
 
-            let transBtn = document.querySelector('#translate-button');
-
-            transBtn.addEventListener('click', function() {
-                for (let i = 0; i < checkbox.length; i++) {
-                    if (checkbox[i].checked) {
-                        checkbox[i].checked = false;
-                        output.value = '';
-                    }
-                }
-            });
-
-            let checkbox = document.querySelectorAll(".checkbox");
-            let output = document.querySelector("#trans-string");
             let arr = [];
 
             for (let i = 0; i < checkbox.length; i++) {
@@ -41,10 +45,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
     /* Live search with API */
     // const apiUrl = 'https://voc.fcqdaqp.online/api/search';
     const apiUrl = import.meta.env.VITE_APP_URL + 'api/search';
-    console.log(apiUrl);
+    let searchResults = document.querySelector('#searchResults');
 
     function searchApiByText(query) {
         const url = `${apiUrl}?text=${encodeURIComponent(query)}`;
+        console.log(`Sending API request with query: ${query}`);
 
         fetch(url)
             .then(response => {
@@ -55,7 +60,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
             })
             .then(result => {
 
-                let searchResults = document.querySelector('#searchResults');
+                
                 let dataArr = result.results;
 
                 searchResults.innerHTML = '';
@@ -64,49 +69,66 @@ document.addEventListener("DOMContentLoaded", (event) => {
                     return word.toLowerCase().includes(query.toLowerCase());
                 });
 
-                filteredWords.forEach(word => {
-                    let option = document.createElement('option');
-                    option.classList.add('bg-gray-800', 'text-white')
-                    option.textContent = word;
-                    searchResults.appendChild(option);
+                filteredWords.forEach((word, index) => {
+                    if (index > 0) {
+                        let hr = document.createElement('hr');
+                        hr.classList.add('my-2', 'border-gray-400');
+                        searchResults.appendChild(hr);
+                    }
+
+                    let div = document.createElement('div');
+                    div.classList.add('bg-white', 'text-black', 'p-2', 'cursor-pointer');
+                    div.textContent = word;
+                    searchResults.appendChild(div);
+
+                    div.addEventListener('click', () => {
+                        search.value = div.textContent;
+                        console.log(`Selected word: ${div.textContent}`);
+                        search.dispatchEvent(new Event('input'));
+                    });
+
+                    if (clearBtn) {
+                        clearBtn.addEventListener('click', function() {
+                            let checkboxContainer = document.querySelector("#checkboxContainer");
+                            if (checkboxContainer) {
+                                checkboxContainer.classList.add('hidden');
+                            }
+                            search.value = '';
+                            div.remove();
+                            let hrElements = searchResults.querySelectorAll('hr');
+                            hrElements.forEach(hr => {
+                                hr.remove();
+                            });
+                            checkInputValue();
+                        });
+                    }
                 });
             })
             .catch(error => {
                 console.error('Fetch error:', error);
             });
     }
-    let search = document.querySelector('#sourceText');
-    let clearBtn = document.querySelector('#clearBtn');
-
+    
     checkInputValue();
 
     if (search) {
         search.addEventListener('input', checkInputValue);
     }
-    if (clearBtn) {
-        clearBtn.addEventListener('click', function() {
-            let checkboxContainer = document.querySelector("#checkboxContainer");
-            if (checkboxContainer) {
-                checkboxContainer.classList.add('hidden');
-            }
-            search.value = '';
-            checkInputValue();
-        });
-    }
-
+    
     function checkInputValue() {
-        if(search) {
-            if (search.value !== '') {
-                clearBtn.style.display = 'block';
-            } else {
-                clearBtn.style.display = 'none';
-            }
+        if (search && clearBtn) {
+            clearBtn.style.display = search.value !== '' ? 'block' : 'none';
         }
     }
 
-    if (search) {
-    search.addEventListener('input', () => {
+    
+        search.addEventListener('input', handleInput);
+        search.addEventListener('change', handleInput);
+
+        function handleInput(event) {
+
         let query = search.value.trim();
+        console.log(`Handling input: ${query}`);
 
         if (search.timer) {
             clearTimeout(search.timer);
@@ -119,7 +141,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 searchResults.innerHTML = '';
             }
         }, 500);
-    });
-    }
+        }
+    
 });
-
