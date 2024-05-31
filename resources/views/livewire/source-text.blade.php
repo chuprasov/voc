@@ -36,33 +36,40 @@
 
         </div>
 
-        <div class="flex flex-row relative">
-            <x-input wire:model="sourceText" list="searchResults" class="basis-4/5" name="sourceText"
-                placeholder="Text..." id="sourceText" value="{{ $sourceText }}" class="w-full !h-16 text-lg pr-6" required
-                :isError="$errors->has('sourceText')" maxlength="30" />
-                <button id="clearBtn" class="absolute right-14 top-5">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
+        <div>
+            <div class="flex flex-row relative">
+                <x-input wire:model="sourceText" list="searchResults" class="basis-4/5" name="sourceText"
+                    placeholder="Text..." id="sourceText" value="{{ $sourceText }}" class="w-full !h-16 text-lg pr-6" required
+                    :isError="$errors->has('sourceText')" maxlength="30" />
+                    
+                    <button id="clearBtn" class="absolute right-14 top-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
 
-            <x-button wire:click="search" id="searchBtn" type="button" name="search" class="basis-1/5 !h-16">
-                <div wire:loading wire:target="search"
-                    class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                    role="status">
-                </div>
-                <div wire:loading.class="hidden" wire:target="search">
-                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                    </svg>
-                </div>
-            </x-button>
+                <x-button wire:click="search" id="searchBtn" type="button" name="search" class="basis-1/5 !h-16">
+                    <div wire:loading wire:target="search"
+                        class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                        role="status">
+                    </div>
+                    <div wire:loading.class="hidden" wire:target="search">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </div>
+                </x-button>
+            </div>
+            <div class="search-results mt-2 overflow-auto max-h-40" id="searchResults">
+                <!-- Результаты поиска будут вставлены сюда -->
+            </div>
             <datalist id="searchResults"
                 class="w-full !h-10 text-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"></datalist>
         </div>
+        
 
         <div class="flex flex-row space-x-4">
             <select name="service" id="service" class="block rounded-lg w-24" wire:model="service">

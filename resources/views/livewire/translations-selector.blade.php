@@ -1,6 +1,6 @@
 <div>
     @if (!empty($translations))
-        <div class = "mt-5 overflow-auto max-h-[150px] lg:max-h-[100%]">
+        <div id="checkboxContainer" class = "mt-5 overflow-auto max-h-[150px] lg:max-h-[100%]">
             @foreach ($translations as $translation)
                 <div>
                     <x-checkbox class="checkbox ml-2" name="t-{{ $loop->index }}" type="checkbox"
