@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
     });
 
     /* Live search with API */
-    // const apiUrl = 'https://voc.fcqdaqp.online/api/search';
     const apiUrl = import.meta.env.VITE_APP_URL + "api/search";
     let searchResults = document.querySelector("#searchResults");
 
@@ -129,7 +128,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     function handleInput(event) {
         let query = search.value.trim();
-        console.log(`Handling input: ${query}`);
+        // console.log(`Handling input: ${query}`);
 
         if (search.timer) {
             clearTimeout(search.timer);
