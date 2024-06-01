@@ -63,7 +63,7 @@
                     </div>
                 </x-button>
             </div>
-            <div class="search-results mt-2 overflow-auto max-h-40" id="searchResults">
+            <div class="search-options mt-2 overflow-auto max-h-40" id="searchResults">
                 <!-- Результаты поиска будут вставлены сюда -->
             </div>
             <datalist id="searchResults"

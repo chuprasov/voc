@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     let clearBtn = document.querySelector("#clearBtn");
     let output = document.querySelector("#trans-string");
     let transBtn = document.querySelector("#translate-button");
+    let searchOptions = document.querySelector(".search-options");
 
     transBtn.addEventListener("click", () => {
         let checkbox = document.querySelectorAll(".checkbox");
@@ -13,7 +14,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 checkbox[i].checked = false;
             }
         }
-        console.log(search.value);
     });
 
     document.addEventListener("click", function (e) {
@@ -46,7 +46,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     function searchApiByText(query) {
         const url = `${apiUrl}?text=${encodeURIComponent(query)}`;
-        console.log(`Sending API request with query: ${query}`);
 
         fetch(url)
             .then((response) => {
@@ -72,6 +71,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                     }
 
                     let div = document.createElement("div");
+
                     div.classList.add(
                         "bg-white",
                         "text-black",
@@ -83,8 +83,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
                     div.addEventListener("click", () => {
                         search.value = div.textContent;
-                        console.log(`Selected word: ${div.textContent}`);
                         search.dispatchEvent(new Event("input"));
+                        searchOptions.classList.add("hidden");
                     });
 
                     if (clearBtn) {
@@ -123,12 +123,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
         }
     }
 
-    search.addEventListener("input", handleInput);
-    search.addEventListener("change", handleInput);
+    if (search) {
+        search.addEventListener("input", (event) => handleSearch(event, true));
+        search.addEventListener("change", (event) =>
+            handleSearch(event, false)
+        );
+    }
 
-    function handleInput(event) {
+    function handleSearch(event, showOptions) {
         let query = search.value.trim();
-        // console.log(`Handling input: ${query}`);
+        if (showOptions) {
+            searchOptions.classList.remove("hidden");
+        }
 
         if (search.timer) {
             clearTimeout(search.timer);
