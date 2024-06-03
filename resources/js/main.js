@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                                 checkboxContainer.classList.add("hidden");
                             }
                             search.value = "";
-                            div.remove();
+                            div.remove;
                             let hrElements =
                                 searchResults.querySelectorAll("hr");
                             hrElements.forEach((hr) => {
