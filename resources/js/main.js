@@ -5,16 +5,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
     let transBtn = document.querySelector("#translate-button");
     let searchOptions = document.querySelector(".search-options");
 
-    transBtn.addEventListener("click", () => {
-        let checkbox = document.querySelectorAll(".checkbox");
+    if (transBtn) {
+        transBtn.addEventListener("click", () => {
+            let checkbox = document.querySelectorAll(".checkbox");
 
-        output.value = "";
-        for (let i = 0; i < checkbox.length; i++) {
-            if (checkbox[i].checked) {
-                checkbox[i].checked = false;
+            output.value = "";
+            for (let i = 0; i < checkbox.length; i++) {
+                if (checkbox[i].checked) {
+                    checkbox[i].checked = false;
+                }
             }
-        }
-    });
+        });
+    }
 
     document.addEventListener("click", function (e) {
         if (e.target.classList.contains("checkbox")) {
@@ -123,29 +125,39 @@ document.addEventListener("DOMContentLoaded", (event) => {
         }
     }
 
-    if (search) {
-        search.addEventListener("input", (event) => handleSearch(event, true));
-        search.addEventListener("change", (event) =>
-            handleSearch(event, false)
-        );
-    }
-
     function handleSearch(event, showOptions) {
         let query = search.value.trim();
         if (showOptions) {
             searchOptions.classList.remove("hidden");
         }
 
-        if (search.timer) {
-            clearTimeout(search.timer);
+        if (query) {
+            searchApiByText(query);
+        } else {
+            searchResults.innerHTML = "";
         }
+    }
 
-        search.timer = setTimeout(() => {
-            if (query) {
-                searchApiByText(query);
-            } else {
-                searchResults.innerHTML = "";
+    let isInput = false;
+    let isChange = false;
+
+    if (search) {
+        search.addEventListener("input", () => {
+            isInput = true;
+            handleSearchWithFlags();
+        });
+
+        search.addEventListener("change", () => {
+            isChange = true;
+            handleSearchWithFlags();
+        });
+
+        function handleSearchWithFlags() {
+            if (isInput || isChange) {
+                handleSearch(null, isInput);
+                isInput = false;
+                isChange = false;
             }
-        }, 500);
+        }
     }
 });
