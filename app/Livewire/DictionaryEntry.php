@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use Laravel\Jetstream\InteractsWithBanner;
-use Livewire\Component;
 use App\Support\TranslatorWeb;
 use Livewire\Attributes\On;
 use LivewireUI\Modal\ModalComponent;

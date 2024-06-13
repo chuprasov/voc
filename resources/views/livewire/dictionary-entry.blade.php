@@ -1,4 +1,4 @@
-<div 
+<div
     class="basis-auto xl:basis-3/4 w-full space-y-4 p-5 rounded-lg border border-solid border-black bg-gray/5 text-dark">
     <div class="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
         <div class="flex flex-col space-y-4 basis-2/5">
@@ -22,7 +22,6 @@
             <x-input wire:model="importance" type="text" name="importance" tabindex="-1"
                 class="block p-2.5 w-full text-lg text-black bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="100" value="{{ $importance ?? 100 }}" required :isError="$errors->has('importance')" />
-
         </div>
     </div>
 
@@ -52,8 +51,5 @@
         </div>
         Save
     </x-button>
-    
-    
-
 </div>
 
