@@ -3,6 +3,7 @@
 namespace App\Support;
 
 use App\Models\DictionaryEntry;
+use App\Models\Translation;
 use App\Services\DeepLTranslator;
 use App\Services\TranslatorContract;
 use App\Services\YandexTranslator;
@@ -148,4 +149,22 @@ class Translator
 
         return $this;
     }
+
+    public function deleteEntry(int $translationId)
+    {
+        $translation = Translation::find($translationId);
+
+        $dictionaryEntry = $translation->dictionaryEntry;
+
+        $entryTransaltions = $dictionaryEntry->translations();
+
+        if ($entryTransaltions->count()>1) {
+            $translation->deleteOrFail();
+        } else {
+            $dictionaryEntry->deleteOrFail();
+        }
+
+        // dd($entryTransaltions);
+    }
+
 }

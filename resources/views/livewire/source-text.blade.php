@@ -42,7 +42,7 @@
                     placeholder="Text..." id="sourceText" value="{{ $sourceText }}" class="w-full !h-16 text-lg pr-6" required
                     :isError="$errors->has('sourceText')" maxlength="30" />
                     
-                    <button id="clearBtn" class="absolute right-14 top-5">
+                    <button id="clearBtn" class="absolute right-20 top-5 lg:right-14 lg:top-5">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
                             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -55,7 +55,7 @@
                         role="status">
                     </div>
                     <div wire:loading.class="hidden" wire:target="search">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        <svg class="w-4 h-4 ml-2 lg:ml-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
@@ -63,7 +63,7 @@
                     </div>
                 </x-button>
             </div>
-            <div class="search-results mt-2 overflow-auto max-h-40" id="searchResults">
+            <div class="search-options mt-2 overflow-auto max-h-40" id="searchResults">
                 <!-- Результаты поиска будут вставлены сюда -->
             </div>
             <datalist id="searchResults"

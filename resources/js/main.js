@@ -3,18 +3,20 @@ document.addEventListener("DOMContentLoaded", (event) => {
     let clearBtn = document.querySelector("#clearBtn");
     let output = document.querySelector("#trans-string");
     let transBtn = document.querySelector("#translate-button");
+    let searchOptions = document.querySelector(".search-options");
 
-    transBtn.addEventListener("click", () => {
-        let checkbox = document.querySelectorAll(".checkbox");
+    if (transBtn) {
+        transBtn.addEventListener("click", () => {
+            let checkbox = document.querySelectorAll(".checkbox");
 
-        output.value = "";
-        for (let i = 0; i < checkbox.length; i++) {
-            if (checkbox[i].checked) {
-                checkbox[i].checked = false;
+            output.value = "";
+            for (let i = 0; i < checkbox.length; i++) {
+                if (checkbox[i].checked) {
+                    checkbox[i].checked = false;
+                }
             }
-        }
-        console.log(search.value);
-    });
+        });
+    }
 
     document.addEventListener("click", function (e) {
         if (e.target.classList.contains("checkbox")) {
@@ -46,7 +48,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     function searchApiByText(query) {
         const url = `${apiUrl}?text=${encodeURIComponent(query)}`;
-        console.log(`Sending API request with query: ${query}`);
 
         fetch(url)
             .then((response) => {
@@ -72,6 +73,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                     }
 
                     let div = document.createElement("div");
+
                     div.classList.add(
                         "bg-white",
                         "text-black",
@@ -83,8 +85,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
                     div.addEventListener("click", () => {
                         search.value = div.textContent;
-                        console.log(`Selected word: ${div.textContent}`);
                         search.dispatchEvent(new Event("input"));
+                        searchOptions.classList.add("hidden");
                     });
 
                     if (clearBtn) {
@@ -95,7 +97,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                                 checkboxContainer.classList.add("hidden");
                             }
                             search.value = "";
-                            div.remove();
+                            div.remove;
                             let hrElements =
                                 searchResults.querySelectorAll("hr");
                             hrElements.forEach((hr) => {
@@ -123,23 +125,39 @@ document.addEventListener("DOMContentLoaded", (event) => {
         }
     }
 
-    search.addEventListener("input", handleInput);
-    search.addEventListener("change", handleInput);
-
-    function handleInput(event) {
+    function handleSearch(event, showOptions) {
         let query = search.value.trim();
-        // console.log(`Handling input: ${query}`);
-
-        if (search.timer) {
-            clearTimeout(search.timer);
+        if (showOptions) {
+            searchOptions.classList.remove("hidden");
         }
 
-        search.timer = setTimeout(() => {
-            if (query) {
-                searchApiByText(query);
-            } else {
-                searchResults.innerHTML = "";
+        if (query) {
+            searchApiByText(query);
+        } else {
+            searchResults.innerHTML = "";
+        }
+    }
+
+    let isInput = false;
+    let isChange = false;
+
+    if (search) {
+        search.addEventListener("input", () => {
+            isInput = true;
+            handleSearchWithFlags();
+        });
+
+        search.addEventListener("change", () => {
+            isChange = true;
+            handleSearchWithFlags();
+        });
+
+        function handleSearchWithFlags() {
+            if (isInput || isChange) {
+                handleSearch(null, isInput);
+                isInput = false;
+                isChange = false;
             }
-        }, 500);
+        }
     }
 });
