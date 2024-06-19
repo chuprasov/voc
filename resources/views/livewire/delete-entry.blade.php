@@ -1,7 +1,7 @@
 <div class="basis-auto w-[400px] space-y-4 p-5 rounded-lg border border-solid border-black bg-gray/5 text-dark">
 
     <div class="text-lg flex mt-[-5px] items-center">
-        Delete entry {{ $id }} "<p class="text-xl font-bold">{{ $sourceText }}</p>"?
+        Delete translation "{{ $translationText }}"?
     </div>
 
     <div class="w-full flex justify-between space-x-4 mt-3">
@@ -12,7 +12,7 @@
             </div>
             Yes
         </x-button>
-        <x-button x-on:click="setShowPropertyTo(false)" type="button" tabindex="-1"
+        <x-button type="button" @click="show = false" tabindex="-1"
             class="w-full !h-16 justify-center">
             No
         </x-button>

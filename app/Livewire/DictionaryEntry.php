@@ -62,6 +62,8 @@ class DictionaryEntry extends ModalComponent
         // $this->banner('Entry saved!');
 
         $this->dispatch('saved');
+
+        $this->dispatch('close-modal');
     }
 
     public function render()

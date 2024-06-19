@@ -156,7 +156,13 @@ class Translator
 
         $dictionaryEntry = $translation->dictionaryEntry;
 
-        $entryTransaltions = $dictionaryEntry->translations;
+        $entryTransaltions = $dictionaryEntry->translations();
+
+        if ($entryTransaltions->count()>1) {
+            $translation->deleteOrFail();
+        } else {
+            $dictionaryEntry->deleteOrFail();
+        }
 
         // dd($entryTransaltions);
     }

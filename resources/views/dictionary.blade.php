@@ -68,8 +68,8 @@
                                         <button id="delete-entry" onclick="Livewire.dispatch(
                                             'openModal',
                                             { component: 'delete-entry', arguments: {
-                                                    id: '{{ $translation->dictionaryEntry->id }}',
-                                                    sourceText: '{{ $translation->dictionaryEntry->text }}',
+                                                    translationId: '{{ $translation->id }}',
+                                                    translationText: '{{ $translation->text }}',
                                             }}); this.blur();">
                                             <div class="border border-black border-solid rounded-lg py-1 ml-2 bg-[#c3c4c7]">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="35px" height="25px" viewBox="0 0 24 24" fill="none">

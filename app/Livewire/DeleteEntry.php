@@ -7,16 +7,18 @@ use LivewireUI\Modal\ModalComponent;
 
 class DeleteEntry extends ModalComponent
 {
-    public string $id;
-    public string $sourceText;
+    public string $translationId;
+    public string $translationText;
 
-    public function delete(): void
+    public function delete()
     {
         $translator = new TranslatorWeb();
 
-        $translator->deleteEntry($this->id);
+        $translator->deleteEntry($this->translationId);
 
-        // $this->dispatch('entry-deleted');
+        $this->dispatch('close-modal');
+
+        return redirect()->route('dictionary.index');
     }
 
     public function render()
