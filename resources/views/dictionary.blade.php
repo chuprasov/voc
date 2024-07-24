@@ -5,7 +5,7 @@
                 <section>
                     <div class="flex flex-col">
                         @foreach ($translations as $index => $translation)
-                        <div class="basis-auto xl:basis-3/4 w-full space-y-4 p-4 {{ $loop->index % 2 == 0 ? 'bg-gray-200' : 'bg-gray-300' }} text-dark" id="{{ $translation->id }}">
+                        <div class="basis-auto xl:basis-3/4 w-full space-y-4 p-4 {{ $loop->index % 2 == 0 ? 'bg-gray-200' : 'bg-gray-300' }} text-dark" id="trans-{{ $translation->id }}">
                                 <div class="lg:flex items-start lg:items-center">
                                     <div class="flex lg:space-x-3 lg:space-y-0">
                                         <div class="flex lg:items-center border border-black border-solid px-3 py-2 rounded-lg bg-[#e5e7eb] mr-4 lg:mr-0">
